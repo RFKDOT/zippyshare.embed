@@ -11,7 +11,7 @@
  *
  */
 
-include "zippyshare-embed.class.php";
+include 'ZSe.php';
 
 $errors = array(
     "Invalid Link",
@@ -28,23 +28,19 @@ $zippylinks = array(
     "http://www14.zippyshare.com/v/66912583/file.html",                     //FILE NOT EXIST
     "http://www66.zippyshare.com/view.jsp?locale=sv&key=50904764");         //FILE EXPIRED
 
-$z = new ZSe;
+$z = new ZippyShareEmbed\ZSe;
 
 $ret = "";
 
-foreach( $zippylinks as $link )
-{
+foreach ($zippylinks as $link) {
     $data = $z->getInfo($link);
     //$data = $z->debugLink($link);
 
     $ret .= "<b>".$link."</b><br />";
 
-    if(is_int($data))
-    {
+    if (is_int($data)) {
         $ret .= $errors[$data];
-    }
-    else
-    {
+    } else {
         $ret .= $z->makePlayer($data['server'], $data['id_elem']);
         $ret .= "<pre>".print_r($data,1)."</pre>";
     }
