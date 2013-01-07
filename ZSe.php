@@ -3,7 +3,7 @@
  *      zippyshare.embed
  *      a PHP Class to extract all the data of each Zippyshare Link.
  *
- *      zippyshare-embed.class.php
+ *      ZSe.php
  *
  *      2012 RFKDOT <rfkdot@gmail.com>
  *
@@ -16,7 +16,7 @@ namespace ZippyShareEmbed;
 class ZSe
 {
 
-    public function getInfo($url_link)
+    public function getInfo($url_link, $debug = FALSE)
     {
 
         $dev = preg_match_all ('/\p{N}+/', $url_link, $result );
@@ -34,48 +34,27 @@ class ZSe
 
         if (strpos($file[164], "File has expired and does not exist anymore on this server") !== FALSE) { return 3; }
 
-        $lines = array(
-        187 => "name",
-        188 => "size",
-        189 => "uploaded",
-        190 => "last_dorn");
-
-        foreach ($lines as $line => $name) {
-            $text_line = $file[$line];
-            $text_line = strip_tags($text_line);
-            $text_line = explode(':', $text_line, 2);
-            $text_line = trim($text_line[1]);
-            $data[$name] = $text_line;
+        if(!$debug)
+        {
+            
+            $lines = array(
+                187 => "name",
+                188 => "size",
+                189 => "uploaded",
+                190 => "last_down");
+                
         }
 
-        return $data;
+        $array = ($debug) ? $file : $lines;
 
-    }
-
-    public function debugLink($url_link)
-    {
-
-        $dev = preg_match_all ('/\p{N}+/', $url_link, $result );
-
-        if ($dev != 2) { return 0; }
-
-        $data['server'] = $result[0][0];
-        $data['id_elem'] = $result[0][1];
-
-        $file = @file("http://www".$data['server'].".zippyshare.com/v/".$data['id_elem']."/file.html");
-
-        if ($file === FALSE) { return 1; }
-
-        if (strpos($file[164], "File does not exist on this server") !== FALSE) { return 2; }
-
-        if (strpos($file[164], "File has expired and does not exist anymore on this server") !== FALSE) { return 3; }
-
-        foreach ($file as $num_line => $text) {
-            $text_line = $file[$num_line];
+        foreach ($array as $line => $name) {
+            
+            $text_line = $file[$line];
             $text_line = strip_tags($text_line);
-            //$text_line = @explode(':', $text_line, 2);
-            $text_line = @trim($text_line);
-            $data[$num_line] = $text_line;
+            (!$debug) ? $text_line = explode(':', $text_line, 2) : '' ;
+            (!$debug) ? $text_line = trim($text_line[1]) : $text_line = @trim($text_line);
+            (!$debug) ? $data[$name] = $text_line : $data[$num_line] = $text_line;
+            
         }
 
         return array_filter($data);
@@ -84,6 +63,7 @@ class ZSe
 
     public function makePlayer($server,$id_elem)
     {
+        
         return "<script type='text/javascript'>
         var zippywww='$server';
         var zippyfile='$id_elem';
@@ -97,6 +77,7 @@ class ZSe
         var zippyborder = '#cccccc';
         </script>
         <script type='text/javascript' src='http://api.zippyshare.com/api/embed_new.js'></script><br />";
+        
     }
 
 }
