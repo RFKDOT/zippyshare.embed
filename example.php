@@ -32,9 +32,11 @@ $z = new ZippyShareEmbed\ZSe;
 
 $ret = "";
 
+$debug = FALSE;
+
 foreach ($zippylinks as $link) {
-    $data = $z->getInfo($link);
-    //$data = $z->debugLink($link);
+    
+    $data = $z->getInfo($link, $debug);
 
     $ret .= "<b>".$link."</b><br />";
 
