@@ -17,7 +17,8 @@ $errors = array(
     "Invalid Link",
     "Error Unknown",
     "File Not Exist",
-    "File Expired");
+    "File Expired"
+    );
 
 $zippylinks = array(
     "http://www65.zippyshare.com/v/62977902/file.html",                     //TYPE 1 LINK
@@ -26,7 +27,8 @@ $zippylinks = array(
     "http://www658.zippyffshare.com/55view.jsp?locale=ro&key=621917172",    //MALFORMED LINK
     "http://www.zippyshare.com/view.jsp?__incorrect_link__",                //INCORRECT LINK
     "http://www14.zippyshare.com/v/66912583/file.html",                     //FILE NOT EXIST
-    "http://www66.zippyshare.com/view.jsp?locale=sv&key=50904764");         //FILE EXPIRED
+    "http://www66.zippyshare.com/view.jsp?locale=sv&key=50904764"           //FILE EXPIRED
+    );
 
 $z = new ZippyShareEmbed\ZSe;
 
@@ -35,22 +37,25 @@ $ret = "";
 $debug = FALSE;
 
 foreach ($zippylinks as $link) {
-    
+
     $data = $z->getInfo($link, $debug);
 
     $ret .= "<b>".$link."</b><br />";
 
     if (is_int($data)) {
-        $ret .= $errors[$data];
+
+        $ret .= "<font color=red>".$errors[$data]."</font>";
+
     } else {
+
         $ret .= $z->makePlayer($data['server'], $data['id_elem']);
         $ret .= "<pre>".print_r($data,1)."</pre>";
+
     }
 
     $ret .= "<hr>";
 
 }
-
 ?>
 <!DOCTYPE html>
 <meta charset="utf-8">
