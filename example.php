@@ -24,7 +24,7 @@ $zippylinks = array(
     "http://www65.zippyshare.com/v/62977902/file.html",                     //TYPE 1 LINK
     "http://www65.zippyshare.com/view.jsp?locale=ro&key=62977902",          //TYPE 2 LINK
     "http://www65.zippyshare.com/v/49982495/file.html",                     //MORE EXAMPLES
-    "http://www23.zippyshare.com/v/50564226/file.html",                     //AND MORE
+    "http://www23.zippyshare.com/v/42497382/file.html",                     //AND MORE
     "http://www658.zippyffshare.com/55view.jsp?locale=ro&key=621917172",    //MALFORMED LINK
     "http://www.zippyshare.com/view.jsp?__incorrect_link__",                //INCORRECT LINK
     "http://www14.zippyshare.com/v/66912583/file.html",                     //FILE NOT EXIST
@@ -35,8 +35,7 @@ $z = new ZippyShareEmbed\ZSe;
 
 $ret = "<h1>zippyshare.embed example</h1>";
 
-foreach ($zippylinks as $link)
-{
+foreach ($zippylinks as $link) {
 
     $data = $z->getInfo($link);
 
@@ -62,7 +61,7 @@ foreach ($zippylinks as $link)
 <meta charset="utf-8">
 <html lang="es">
     <head>
-    <title>zippyshare.embed EXAMPLE</title>
+    <title>zippyshare.embed example</title>
     </head>
     <body>
     <?= $ret ?>

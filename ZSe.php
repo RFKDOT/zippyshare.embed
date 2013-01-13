@@ -33,25 +33,26 @@ class ZSe
         if (strpos($file[164], "File has expired and does not exist anymore on this server") !== FALSE) { return 3; }
 
         $lines = array(
-			187 => "name",
+            187 => "name",
             188 => "size",
             189 => "uploaded",
             190 => "last_down"
-            );            
+            );
 
         $array = ($debug) ? $file : $lines;
 
-        foreach ($array as $line => $name)
-        {
+        foreach ($array as $line => $name) {
+
             $text_line = $file[$line];
             $text_line = strip_tags($text_line);
             (!$debug) ? $text_line = explode(':', $text_line, 2) : '' ;
             (!$debug) ? $text_line = trim($text_line[1]) : $text_line = @trim($text_line);
             (!$debug) ? $data[$name] = $text_line : $data[$line] = $text_line;
+
         }
-        
+
         return array_filter($data);
-        
+
     }
 
     public function makePlayer($server,$id_elem)
@@ -69,6 +70,7 @@ class ZSe
         var zippyborder = '#cccccc';
         </script>
         <script type='text/javascript' src='http://api.zippyshare.com/api/embed_new.js'></script><br />";
+
     }
-    
+
 }
